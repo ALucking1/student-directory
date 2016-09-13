@@ -23,10 +23,14 @@ def print_header
 end
 
 def print(students)
-  students.each.with_index(1) do |student, index|
-    puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+  students.each do |student, index|
+  if student[:name].start_with?('D')
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  end
   end
 end
+
+#need the if statement to eliminate other possibilities - .start_with?(letter) goes onto :name (hash)
 
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
