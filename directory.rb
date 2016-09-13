@@ -23,14 +23,16 @@ def print_header
 end
 
 def print(students)
-  students.each do |student, index|
-  if student[:name].start_with?('D')
+  students.each do |student|
+  if student[:name].length <12 || student[:name].start_with?('D')
     puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
-  end
+end
 end
 
-#need the if statement to eliminate other possibilities - .start_with?(letter) goes onto :name (hash)
+#if :name is shorter than 12 characters - print
+#.length <12
+#works exactly the same way as .start_with - this version just shows an "or"
 
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
