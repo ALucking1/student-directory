@@ -5,12 +5,24 @@ def input_students
   while input != :done do
     puts "Please enter the name of the student"
     name = gets.chomp
+
     puts "Please enter the student's age"
     age = gets.chomp
-    #add the student hash to the array
-    students << {name: name, cohort: :november, age: age}
+
+    puts "Please enter student cohort month (January, February, etc.)"
+    cohort = gets.chomp
+     if cohort.empty?
+       puts "Please enter student cohort month (January, February, etc.)"
+       cohort = gets.chomp
+     end
+     if cohort.empty?
+       cohort = "January"
+     end
+     cohort.to_sym
+
+    students << {name: name, cohort: cohort, age: age}
     puts "Now we have #{students.count} students"
-    # get another name from the user
+
     puts "Any more students to add? (yes or no)"
     input = gets.downcase.include?("y") ? false : :done
   end
