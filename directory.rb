@@ -1,9 +1,7 @@
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  #create an empty array
   students = []
-  #get the first name
   name = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
@@ -23,13 +21,12 @@ def print_header
 end
 
 def print(students)
-  e = 0
-  until e == students.length
-    student = students[e]
+  i = 0
+  until i == students.length
   #students.each do |student|
   #if student[:name].length <12 || #student[:name].start_with?('D')
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
-    e += 1
+    puts "#{students[i][:name]} (#{students[i][:cohort]} cohort)"
+    i += 1
   end
 end
 
