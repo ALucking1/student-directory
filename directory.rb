@@ -18,13 +18,21 @@ def input_students
       if cohort.empty?
         cohort = "January"
       end
-      cohort.to_sym
+    cohort.to_sym
 
-      students << {name: name, cohort: cohort, age: age}
-      puts "Now we have #{students.count} students"
-
-      puts "Any more students to add? (yes or no)"
-      input = gets.downcase.include?("y") ? true : false
+    puts "Do all the details for this student look correct? (yes or no)"
+    puts name
+    puts age
+    puts cohort
+    answer = gets.chomp
+      if answer.include?("n")
+        input == true
+      else
+        students << {name: name, cohort: cohort, age: age}
+        puts "Now we have #{students.count} students"
+        puts "Any more students to add? (yes or no)"
+        input = gets.downcase.include?("y") ? true : false
+      end
     end
   #return the array of students
   students
