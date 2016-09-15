@@ -29,13 +29,22 @@ def input_students
         input == true
       else
         students << {name: name, cohort: cohort, age: age}
-        puts "Now we have #{students.count} students"
+        puts student_number(students)
         puts "Any more students to add? (yes or no)"
         input = gets.downcase.include?("y") ? true : false
       end
     end
   #return the array of students
   students
+end
+
+def student_number(students)
+  n = students.count
+    if n != 1
+      puts "Now we have #{students.count} students"
+    else
+      puts "Now we have #{students.count} student"
+    end
 end
 
 def print_header
