@@ -40,8 +40,10 @@ end
 
 def student_number(students)
   n = students.count
-    if n != 1
+    if n > 1
       puts "Now we have #{students.count} students"
+    elsif n == 0
+      puts "We have no students"
     else
       puts "Now we have #{students.count} student"
     end
@@ -53,9 +55,8 @@ def print_header
 end
 
 def print(students)
-  students.each do |student|
-  #if student[:name].length <12 || #student[:name].start_with?('D')
-    puts "#{student[:name]} #{student[:age]} (#{student[:cohort]} cohort)".center(50)
+      students.sort_by do |k, v|
+      puts "#{k[:cohort]} cohort, #{k[:name]}, #{k[:age]}".center(50)
   end
 end
 
