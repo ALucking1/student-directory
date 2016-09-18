@@ -5,26 +5,26 @@ def input_students
 
     while input == true do
       puts "Please enter the name of the student"
-      name = gets.chomp
+      @name = STDIN.gets.chomp
 
       puts "Please enter the student's age"
-      age = gets.chomp
+      @age = STDIN.gets.chomp
 
       puts "Please enter student cohort month (January, February, etc.)"
-      cohort = gets.chomp
-      if cohort.empty?
-        cohort = "January"
+      @cohort = STDIN.gets.chomp
+      if @cohort.empty?
+        @cohort = "January"
       end
-    cohort.to_sym
 
     puts "Do all the details for this student look correct? (yes or no)"
-    puts name
-    puts age
-    puts cohort
-    answer = gets.chomp
+    puts @name
+    puts @age
+    puts @cohort
+    answer = STDIN.gets.chomp
       if answer.include?("n")
         input == true
-      else @students << {name: name, cohort: cohort, age: age}
+      else #@students << {name: name, cohort: cohort.to_sym, age: age}
+        students_to_array
       end
 
       if @students.count > 1
@@ -36,14 +36,14 @@ def input_students
       end
 
       puts "Any more students to add? (yes or no)"
-      input = gets.downcase.include?("y") ? true : false
+      input = STDIN.gets.downcase.include?("y") ? true : false
     end
 end
 
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -78,6 +78,10 @@ def process(selection)
   end
 end
 
+def students_to_array
+  @students << {name: @name, cohort: @cohort.to_sym, age: @age}
+end
+
 def print_header
   puts "The students of Villains Academy".center(50)
   puts "-------------".center(50)
@@ -104,20 +108,33 @@ def save_students
   file = File.open("students.csv", "w")
   #iterate over the array of students
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
+    student_data = [student[:name], student[:cohort], student[:age]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
 end
 
-def load_students
+def load_students(filename = "students.csv")
   file = File.open("students.csv", "r")
   file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  name, cohort, age = line.chomp.split(',')
+    students_to_array
+    #@students << {name: name, cohort: cohort.to_sym, age: age}
   end
   file.close
+end
+
+def try_load_students
+  filename = ARGV.first #first argument from the command line
+  return if filename.nil? #get out of the method if it isn't given
+  if File.exists?(filename)
+    load_students(filename)
+      puts "Loaded #{@students.count} from #{filename}"
+  else #if it doesn't exists
+    puts "Sorry, #{filename} doesn't exist"
+    exit
+  end
 end
 
 interactive_menu
