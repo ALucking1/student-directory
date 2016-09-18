@@ -1,30 +1,6 @@
-def interactive_menu
-  students = [] #has to be declared outside the loop
-  loop do
-    #1, print the menu and ask the user what to do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-    #2, read the input and save it into a variable
-    selection = gets.chomp
-    #3, do what the user has asked
-    case selection
-      when "1"
-        students = input_students
-      when "2"
-        print_header
-        print(students)
-        print_footer(students)
-      when "9"
-        exit #this will cause the program to terminate
-      else
-        puts "I don't know what you meant, try again"
-    end
-  end
-end
+@students = []
 
 def input_students
-  students = []
   input = true
 
     while input == true do
@@ -48,22 +24,52 @@ def input_students
     answer = gets.chomp
       if answer.include?("n")
         input == true
-      else students << {name: name, cohort: cohort, age: age}
-      end
-      
-      if students.count > 1
-        puts "Now we have #{students.count} students"
-      elsif students.count == 0
-        puts "We have no students"
-      else
-        puts "Now we have #{students.count} student"
+      else @students << {name: name, cohort: cohort, age: age}
       end
 
-        puts "Any more students to add? (yes or no)"
-        input = gets.downcase.include?("y") ? true : false
+      if @students.count > 1
+        puts "Now we have #{@students.count} students"
+      elsif @students.count == 0
+        puts "We have no students"
+      else
+        puts "Now we have #{@students.count} student"
+      end
+
+      puts "Any more students to add? (yes or no)"
+      input = gets.downcase.include?("y") ? true : false
+    end
+end
+
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
   end
-  #return the array of students
-  students
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "9"
+      exit
+    else
+      puts "I don't know what you meant, try again"
+  end
 end
 
 def print_header
@@ -71,19 +77,19 @@ def print_header
   puts "-------------".center(50)
 end
 
-def print(students)
-    students.sort_by do |k, v|
+def print_students_list
+  @students.sort_by do |k, v|
     puts "#{k[:cohort]} cohort, #{k[:name]}, #{k[:age]}".center(50)
-    end
+  end
 end
 
-def print_footer(students)
-  if students.count > 1
-    puts "Overall, we have #{students.count} students".center(50)
-  elsif students.count == 0
+def print_footer
+  if @students.count > 1
+    puts "Overall, we have #{@students.count} students".center(50)
+  elsif @students.count == 0
     puts "Overall, we have no students".center(50)
   else
-    puts "Overall, we have #{students.count} student".center(50)
+    puts "Overall, we have #{@students.count} student".center(50)
   end
 end
 
