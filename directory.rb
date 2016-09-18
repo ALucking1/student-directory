@@ -1,3 +1,28 @@
+def interactive_menu
+  students = [] #has to be declared outside the loop
+  loop do
+    #1, print the menu and ask the user what to do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+    #2, read the input and save it into a variable
+    selection = gets.chomp
+    #3, do what the user has asked
+    case selection
+      when "1"
+        students = input_students
+      when "2"
+        print_header
+        print(students)
+        print_footer(students)
+      when "9"
+        exit #this will cause the program to terminate
+      else
+        puts "I don't know what you meant, try again"
+    end
+  end
+end
+
 def input_students
   students = []
   input = true
@@ -24,10 +49,8 @@ def input_students
       if answer.include?("n")
         input == true
       else students << {name: name, cohort: cohort, age: age}
-        #puts student_number(students)
       end
-
-
+      
       if students.count > 1
         puts "Now we have #{students.count} students"
       elsif students.count == 0
@@ -42,17 +65,6 @@ def input_students
   #return the array of students
   students
 end
-
-#def student_number(students)
-  #n = students.count
-    #if n > 1
-      #puts "Now we have #{students.count} students"
-    #elsif n == 0
-      #puts "We have no students"
-    #else
-      #puts "Now we have #{students.count} student"
-    #end
-#end
 
 def print_header
   puts "The students of Villains Academy".center(50)
@@ -75,8 +87,4 @@ def print_footer(students)
   end
 end
 
-students = input_students
-#nothing happens until we call the methods
-print_header
-print(students)
-print_footer(students)
+interactive_menu
