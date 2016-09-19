@@ -44,32 +44,31 @@ def input_students
 
       puts "Please enter student cohort month (January, February, etc.)"
       @cohort = STDIN.gets.chomp
-      if @cohort.empty?
-        @cohort = "January"
-      end
+        if @cohort.empty?
+          @cohort = "January"
+        end
 
-    puts "Do all the details for this student look correct? (yes or no)"
-    puts @name
-    puts @age
-    puts @cohort
-    answer = STDIN.gets.chomp
-      if answer.include?("n")
-        input == true
-      else
-        students_to_array
-      end
+      puts "Do the details for this student - #{@name}, #{@age}, #{@cohort} - look correct? (yes or no)"
+        answer = STDIN.gets.chomp
+        if answer.include?("n")
+          input == true
+        else
+          students_to_array
+        end
 
-      if @students.count > 1
-        puts "Now we have #{@students.count} students"
-      elsif @students.count == 0
-        puts "We have no students"
-      else
-        puts "Now we have #{@students.count} student"
-      end
+      count_students
 
       puts "Any more students to add? (yes or no)"
       input = STDIN.gets.downcase.include?("y") ? true : false
     end
+end
+
+def count_students
+  if @students.count == 1
+    puts "We have #{@students.count} student"
+  else
+    puts "We have #{@students.count} students"
+  end
 end
 
 def students_to_array
@@ -87,8 +86,6 @@ def print_header
   puts "-------------".center(50)
 end
 
-
-
 def print_students_list
   @students.sort_by do |k, v|
     puts "#{k[:cohort]} cohort, #{k[:name]}, #{k[:age]}".center(50)
@@ -96,12 +93,10 @@ def print_students_list
 end
 
 def print_footer
-  if @students.count > 1
-    puts "Overall, we have #{@students.count} students".center(50)
-  elsif @students.count == 0
-    puts "Overall, we have no students".center(50)
-  else
+  if @students.count == 1
     puts "Overall, we have #{@students.count} student".center(50)
+  else
+    puts "Overall, we have #{@students.count} students".center(50)
   end
 end
 
