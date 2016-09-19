@@ -110,6 +110,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "#{@students.count} student/s successfully added to #{@filename}"
 end
 
 def load_students
@@ -119,6 +120,7 @@ def load_students
     students_to_array
   end
   file.close
+  puts "#{@students.count} student/s successfully loaded from #{@filename}. Choose option 2 from the menu to view."
 end
 
 def try_load_students
