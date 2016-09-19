@@ -1,5 +1,7 @@
 @students = []
 
+require "CSV"
+
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
@@ -47,7 +49,6 @@ def input_students
         if @cohort.empty?
           @cohort = "January"
         end
-        @cohort.to_sym
 
       puts "Do the details for this student - #{@name}, #{@age}, #{@cohort} - look correct? (yes or no)"
         answer = STDIN.gets.chomp
@@ -103,21 +104,18 @@ end
 
 def save_students
   #open the file for writing
-  File.open("#{@filename}", "w") do |file|
+  CSV.open(@filename, "wb") do |csv|
   #iterate over the array of students
   @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:age]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    csv << [student[:name], student[:cohort], student[:age]]
     end
   end
   puts "#{@students.count} student/s successfully added to #{@filename}"
 end
 
 def load_students
-  File.open(@filename, "r") do |file|
-  file.readlines.each {|line|
-  name, cohort, age = line.chomp.split(',') }
+  CSV.foreach(@filename) do |line|
+    name, cohort, age = line
     students_to_array
   end
   #file.close
